@@ -33,7 +33,9 @@ def readData():
             except:
                 pass
 
-            result.append(json.dumps(entry))
+            asJson = json.dumps(entry)
+            asJson.encode("ascii", "ignore").decode()
+            result.append(asJson)
             global numberOfSentences
             numberOfSentences += len(entry)
     
@@ -44,12 +46,14 @@ def main():
 
     global numberOfSentences
 
-    vectorizer = CountVectorizer()
-    vectorizer.fit_transform(data)
+    vectorizer = CountVectorizer(encoding='utf-16')
+    counts = vectorizer.fit_transform(data)
     # print(vectorizer.get_feature_names())
     print('Number of documents = ', len(data))
-    print('Number of tokens = ', len(vectorizer.vocabulary_))
+    print('Number of tokens = ', len(counts.vocabulary_))
     print('Number of Sentences = ', numberOfSentences)
+    print('Feature Names', counts.get_feature_names())
+    print('Total number of words = ', vectorizer)
 
 if __name__ == "__main__":
     main()
