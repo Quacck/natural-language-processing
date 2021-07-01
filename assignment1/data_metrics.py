@@ -63,7 +63,7 @@ def main():
     overallSum = 0
     for count in summedUp.values:
         overallSum += count
-    print('Number of Sentences = ', overallSum)
+    print('Number of Words = ', overallSum)
 
 if __name__ == "__main__":
     main()
