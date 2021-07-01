@@ -1,5 +1,6 @@
 from numpy import number
 import sklearn
+import pandas
 import json
 import os
 import re
@@ -50,10 +51,19 @@ def main():
     counts = vectorizer.fit_transform(data)
     # print(vectorizer.get_feature_names())
     print('Number of documents = ', len(data))
-    print('Number of tokens = ', len(counts.vocabulary_))
+    print('Number of tokens = ', len(vectorizer.vocabulary_))
     print('Number of Sentences = ', numberOfSentences)
-    print('Feature Names', counts.get_feature_names())
-    print('Total number of words = ', vectorizer)
+
+    panda_counts = pandas.DataFrame.sparse.from_spmatrix(
+        data=counts,
+        columns=vectorizer.get_feature_names()
+    )
+    summedUp = panda_counts.sum()
+
+    overallSum = 0
+    for count in summedUp.values:
+        overallSum += count
+    print('Number of Sentences = ', overallSum)
 
 if __name__ == "__main__":
     main()
